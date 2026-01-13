@@ -37,13 +37,13 @@ class Date_Time:
         checker.restype=C.c_int
         passingdate=date.replace("-", "")
         passingdate=passingdate.encode("UTF-8")
-        valadator=len(passingdate)
+        # valadator=len(passingdate)
         # print(valadator)
-        if(valadator>8):
-            raise TypeError(f"The year index goes out of bound {valadator}")
-        value=checker(passingdate,valadator)
+        # if(valadator>4):
+        #     raise TypeError(f"The year index goes out of bound {valadator}")
+        value=checker(passingdate,len(passingdate))
         if (value==0):
-            raise TypeError("This is not the falid way the Date Contais a charater ")
+            raise TypeError("This is not the valid way the Date Contais a charater ")
         self.date=date
         # print(self.date)
     def Date(self,date:str,format=1):
@@ -92,7 +92,8 @@ class Date_Time:
 
 
 if __name__=="__main__":
-   z=Date_Time()
-   a=z.Date("10-02-2026")
+    z=Date_Time()
+    a=z.Date("10-02-2026")
+    print((a[2]))
 #    v=z.Day_of_the_year(a)
 #    print(v)

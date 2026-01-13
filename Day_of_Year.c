@@ -1,16 +1,16 @@
 #include <stdlib.h>
 
-char* Day_of_the_year(int *date_arr, int format)
+char *Day_of_the_year(int *date_arr, int format)
 {
 
-    int day = (date_arr[1] * 10) + (date_arr[2]);
-    int month = (date_arr[3] * 10) + (date_arr[4]);
-    int year = (date_arr[5] * 1000) + (date_arr[6] * 100) + (date_arr[7] * 10) + (date_arr[8]);
-    if (day==0 || month==0){
-       
+    int day = date_arr[1];
+    int month = date_arr[2];
+    int year = date_arr[3];
+    if (day == 0 || month == 0)
+    {
+
         return "No";
     }
-
 
     if (month < 3)
     {
@@ -28,6 +28,6 @@ char* Day_of_the_year(int *date_arr, int format)
                7;
 
     int postivemod = (date % 7 + 7) % 7;
-    char*weekDays[] = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+    char *weekDays[] = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
     return weekDays[postivemod];
 }
