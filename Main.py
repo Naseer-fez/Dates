@@ -56,10 +56,10 @@ class Date_Time:
         dllpath=C.CDLL(os.path.join (self.path,"Date_Filler.dll"))
         date_maker=dllpath.datearrangment
         date_maker.argtypes=[C.c_char_p,C.POINTER(C.c_int)]
-        date_maker.restype=C.c_int
+        date_maker.restype=C.c_char_p
         date=date.replace("-", "").encode("UTF-8")#this can be optmised cause i call this again in the above line
         validator=date_maker(date,self.date_arr)
-        if(validator==0):
+        if(validator==b'NO'):
             raise TypeError("Out of range output , please verify the date") 
         return self.date_arr
     def Day_of_the_year(self,date_arr,format=1):
