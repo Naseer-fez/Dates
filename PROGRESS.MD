@@ -6,7 +6,7 @@ I have created the Nessacary requriments for the date , My main focus right now 
 I have created the memory alloacation and date storage , the main problem i have faced is NAMING
 which is quite funny , but i want to make this a production level project in which  i will work on this later down the time and also , i work with other people as well. 
 
-Day-2 (plan)
+Day-2 
 THe plan for day 2 is to make the funtional calucltion , like finding what day it is , based on the year , after this , the plan is to add
 the Default date modfier in which iam going to allote the date even if i dont get the right format and also the date validator.
 
