@@ -60,7 +60,8 @@ class Date_Time:
         date=date.replace("-", "").encode("UTF-8")#this can be optmised cause i call this again in the above line
         validator=date_maker(date,self.date_arr)
         if(validator==b'NO'):
-            raise TypeError("Out of range output , please verify the date") 
+            raise TypeError("Out of range output , please verify the date")
+        print(validator.decode()) 
         return self.date_arr
     def Day_of_the_year(self,date_arr,format=1):
         dllpath=C.CDLL(os.path.join(self.path,"Day_of_Year.dll"))
@@ -93,7 +94,8 @@ class Date_Time:
 
 if __name__=="__main__":
     z=Date_Time()
-    a=z.Date("10-02-2026")
-    print((a[2]))
+    a=z.Date("10-2-2026")
+    for i in range(1,4):
+        print(a[i])
 #    v=z.Day_of_the_year(a)
 #    print(v)

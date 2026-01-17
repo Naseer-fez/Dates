@@ -1,116 +1,152 @@
+#include <string.h>
 #include <ctype.h>
+
 #include <stdio.h>
-#include <stdlib.h>
-// int day_of_year(int*date_arr){
-// int format=date_arr[0];
-// int day=(date_arr[1]*10)+(date_arr[2]);
-// int month=(date_arr[3]*10)+(date_arr[4]);
 
-// }
-
+#define date_size 4
 int datevalidater(int *date_arr);
-int datearrangment(char *date, int *date_arr);
+char *datearrangment(char *date, int *date_arr);
 int values(char *date, int start, int end);
+void less_values(char *real_date, int old_date_len);
 
-int datearrangment(char *date, int *date_arr)
+char *datearrangment(char *date, int *date_arr)
 {
-    //  int day = (date_arr[1] * 10) + (date_arr[2]);
-    //     int month = (date_arr[3] * 10) + (date_arr[4]);
-    //     int year = (date_arr[5] * 1000) + (date_arr[6] * 100) + (date_arr[7] * 10) + (date_arr[8]);
-    // for (int size = 0; size < date_size; size++)
-    // {
+    char *new_date = malloc(9);
 
-    //     int number =atoi( date[size]);
+    memset(new_date, '0', 8);
 
-    //     date_arr[size + 1] = number;
-    // }
-    date_arr[1] = values(date, 0, 3);
-    date_arr[2] = values(date, 4, 5);
-    date_arr[3] = values(date, 6, 7);
+    size_t len = strlen(date);
+    memcpy(new_date, date, len > 8 ? 8 : len);
 
-    return datevalidater(date_arr);
-}
+    new_date[8] = 0;
 
+    less_values(new_date, len); // Fixed: removed one *
 
-int values(char *date, int start, int end)
-{
-    int length = end - start + 1;
+    date_arr[1] = values(new_date, 0, 1);
+    date_arr[2] = values(new_date, 2, 3);
+    date_arr[3] = values(new_date, 4, 7);
 
-    char number[length+1];
-    int index=0;
-    for (int i = 0; i < length; i++)
+    int input = datevalidater(date_arr);
+    if (input == 1)
     {
-
-        number[i] = date[i+start];
-        index++;
-
+        return new_date;
     }
-    number[index]='\0';
-    return atoi(number);
+    else
+    {
+        free(new_date);
+        return "NO";
+    }
 }
-
-
-
-
-int main()
-{
-    int arr[] = {1, 1, 6, 0, 1, 2, 0, 2, 6};
-    // int z=day_of_year(arr);
-int n=4;
-    int a[n];
-    // printf("%d-->", datearrangment("20061212",a));
-    datearrangment("20061312",a);
-a[0]=1;
-for (int i = 0; i < n; i++)
-{
-    printf("%d->",a[i]);
-}
-
-
-}
-
 
 int datevalidater(int *date_arr)
 {
 
-    // int day = (date_arr[1] * 10) + (date_arr[2]);
-    // int month = (date_arr[3] * 10) + (date_arr[4]);
-    // int year = (date_arr[5] * 1000) + (date_arr[6] * 100) + (date_arr[7] * 10) + (date_arr[8]);
-    int year = date_arr[1];
+    int day = date_arr[1];
     int month = date_arr[2];
-    int day = date_arr[3];
-    if (month < 0 || month > 12)
+    int year = date_arr[3];
+    if (month == 0)
     {
-        return 0;
+        return 1;
     }
+    // if(month>12){
+
+    //     return 0;
+    // }
     int valid_date_range = 30 + (month + (month / 8)) % 2;
 
     if ((month == 2))
     {
         int isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-        if (isLeap)
-        {
-            if (day > 29)
-            {
-
-                return 0;
-            }
-        }
-        else
-        {
-
-            if (day > 28)
-            {
-
-                return 0;
-            }
-        }
+        valid_date_range = isLeap ? 29 : 28;
     }
     if (day >= 0 && day <= valid_date_range)
     {
 
         return 1;
     }
-
-    return 0;
 }
+
+int values(char *date, int start, int end)
+{
+    int length = end - start + 1;
+
+    char number[length + 1];
+    int index = 0;
+    for (int i = 0; i < length; i++)
+    {
+
+        number[i] = date[i + start];
+        index++;
+    }
+    number[index] = '\0';
+
+    return atoi(number);
+}
+
+// The length of the string is wrong here
+void less_values(char *real_date, int len)
+{
+
+    int max_len = 8;
+    if (len <= 4)
+    {
+        char temp[len];
+        strncpy(temp, real_date, len);
+
+        for (int i = 0; i < max_len; i++)
+        {
+            if (i >= len)
+            {
+
+                real_date[i] = temp[i - len];
+          
+            }
+            else
+            {
+                real_date[i] = '0';
+            }
+        }
+
+        return;
+    }
+
+    if (len == 5)
+    {
+        for (int i = len; i < max_len; i++)
+        {
+
+            real_date[i] = '0';
+        }
+        
+        return;
+    }
+    if (len == 6)
+    {
+        char dig4 = real_date[4];
+        char dig5 = real_date[5];
+        int number = ((dig4 - '0') * 10 + (dig5 - '0'));
+
+        if (number > 12)
+        {
+            real_date[6] = '0';
+            real_date[7] = dig5;
+            real_date[4] = '0';
+            real_date[5] = dig4;
+            return;
+        }
+        if (number < 10)
+        {
+
+            real_date[5] = real_date[4];
+            real_date[4] = '0';
+            return;
+        }
+        real_date[6] = '0';
+        real_date[7] = '0';
+        return;
+    }
+    real_date[8] = '0';
+
+    return;
+}
+
