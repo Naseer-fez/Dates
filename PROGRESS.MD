@@ -14,4 +14,5 @@ Day-3
 Faced a real logical and memory problem today, with C memory leak is a very well know problem ,i have countured the memory leak problem ,but i have found myself wondering in the Logical side of the things, i have to make a full rewamp in the logic of the date placemnts
 
 Day-4
-I have figured out the Logical error but i have realised that my initail methods were wrong , so the good news is that , i have to rewite only one single function , so that is the bets thing, but the bad news is that that is the main functions which will totaly makes this libary unique and comparetively different to other libaries.
+I have figured out the Logical error but i have realised that my initail methods were wrong , so the good news is that , i have to rewite only one single function , so that is the bets thing, but the bad news is that that is the main functions which will totaly makes this libary unique and comparetively different to other libarie.
+Day -5
